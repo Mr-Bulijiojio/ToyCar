@@ -112,17 +112,11 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-	//USART3_Init(115200);
+	USART3_Init(115200);
 	USART2_Init(230400);
 	
 	CarInit(&McNhamCar);
 	
-//	L298N_GPIO_INIT();
-//	L298N_SetDirection(AllWheel, Wheel_Stop);
-//	PID_Init(&Vel_PID[0], 0.8, 0, 5, TIM_PERIOD, -TIM_PERIOD, 100, -100);
-//	PID_Init(&Vel_PID[1], 0.8, 0, 5, TIM_PERIOD, -TIM_PERIOD, 100, -100);
-//	PID_Init(&Vel_PID[2], 0.8, 0, 5, TIM_PERIOD, -TIM_PERIOD, 100, -100);
-//	PID_Init(&Vel_PID[3], 0.8, 0, 5, TIM_PERIOD, -TIM_PERIOD, 100, -100);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -151,27 +145,6 @@ int main(void)
 	__HAL_TIM_SET_COUNTER(&htim8, 30000);
 	HAL_TIM_Base_Start_IT(&htim7);
 	
-//	HAL_Delay(500);
-//	HAL_Delay(500);
-//	HAL_Delay(500);
-//	
-//	L298N_SetDirection(AllWheel, Wheel_Forward);
-//	
-//	HAL_Delay(500);
-//	HAL_Delay(500);
-//	HAL_Delay(500);
-//	
-//	L298N_SetDirection(AllWheel, Wheel_Stop);
-//	
-//	HAL_Delay(500);
-//	HAL_Delay(500);
-//	HAL_Delay(500);
-//	L298N_SetDirection(AllWheel, Wheel_Reverse);
-//	
-//	HAL_Delay(500);
-//	HAL_Delay(500);
-//	HAL_Delay(500);
-//	L298N_SetDirection(AllWheel, Wheel_Stop);
   /* USER CODE END 2 */
 
   osKernelInitialize();
@@ -626,81 +599,6 @@ void StartDefaultTask(void *argument)
   {
     osDelay(50);
 	  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
-//		if (USART2_RX_STA & 0x8000)
-//		{
-//			int len = USART2_RX_STA & 0x3fff;
-//			//printf("\r\nhello:\r\n");
-//			HAL_UART_Transmit(&UART2_Handler, (uint8_t*)USART2_RX_BUF, len, 1000);
-//			while(__HAL_UART_GET_FLAG(&UART2_Handler, UART_FLAG_TC) != SET);
-//			//printf("\r\nbye\r\n");
-//			
-//			if (USART2_RX_BUF[0] == '1')
-//			{
-//				L298N_SetDirection(AllWheel, Wheel_Forward);
-//	
-//				osDelay(500);
-//				osDelay(500);
-//				osDelay(500);
-//	
-//				L298N_SetDirection(AllWheel, Wheel_Stop);
-//			}
-//			if (USART2_RX_BUF[0] == '2')
-//			{
-//				L298N_SetDirection(AllWheel, Wheel_Reverse);
-//	
-//				osDelay(500);
-//				osDelay(500);
-//				osDelay(500);
-//	
-//				L298N_SetDirection(AllWheel, Wheel_Stop);
-//			}
-//			if (USART2_RX_BUF[0] == '3')
-//			{
-//				L298N_SetDirection(FrontWheel_Left | RearWheel_Right, Wheel_Reverse);
-//				L298N_SetDirection(FrontWheel_Right | RearWheel_Left, Wheel_Forward);
-//	
-//				osDelay(500);
-//				osDelay(500);
-//				osDelay(500);
-//	
-//				L298N_SetDirection(AllWheel, Wheel_Stop);
-//			}
-//			if (USART2_RX_BUF[0] == '4')
-//			{
-//				L298N_SetDirection(FrontWheel_Left | RearWheel_Right, Wheel_Forward);
-//				L298N_SetDirection(FrontWheel_Right | RearWheel_Left, Wheel_Reverse);
-//	
-//				osDelay(500);
-//				osDelay(500);
-//				osDelay(500);
-//	
-//				L298N_SetDirection(AllWheel, Wheel_Stop);
-//			}
-//			if (USART2_RX_BUF[0] == '5')
-//			{
-//				L298N_SetDirection(FrontWheel_Left | RearWheel_Left, Wheel_Reverse);
-//				L298N_SetDirection(FrontWheel_Right | RearWheel_Right, Wheel_Forward);
-//	
-//				osDelay(500);
-//				osDelay(500);
-//				osDelay(500);
-//	
-//				L298N_SetDirection(AllWheel, Wheel_Stop);
-//			}
-//			if (USART2_RX_BUF[0] == '6')
-//			{
-//				if (mask == 0)
-//				{
-//
-//				}
-//				else
-//				{
-//
-//				}
-//				
-//			}
-//			USART2_RX_STA = 0;
-//		}
 	  if(USART2_RX_STA & 0x8000)
 	  {
 		  int len = USART2_RX_STA & 0x3fff;
@@ -799,11 +697,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   /* USER CODE BEGIN Callback 1 */
 	if (htim->Instance == TIM7) 
 	{
-	    //HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_7);
-//		Rpm_Vel[0] = __HAL_TIM_GET_COUNTER(&htim1) - 30000;
-//		Rpm_Vel[1] = __HAL_TIM_GET_COUNTER(&htim2) - 30000;
-//		Rpm_Vel[2] = __HAL_TIM_GET_COUNTER(&htim8) - 30000;
-//		Rpm_Vel[3] = __HAL_TIM_GET_COUNTER(&htim5) - 30000;
+
 		McNhamCar.FrontLeftWheel.CurrentSpeed = __HAL_TIM_GET_COUNTER(&htim1) - 30000;
 		McNhamCar.FrontRightWheel.CurrentSpeed = __HAL_TIM_GET_COUNTER(&htim2) - 30000;
 		McNhamCar.RearLeftWheel.CurrentSpeed = __HAL_TIM_GET_COUNTER(&htim8) - 30000;
@@ -817,7 +711,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		VelocityPidCallFnx(&McNhamCar);
 		
 		CarUpdate(&McNhamCar);
-		
+// Watch Parameter		
 //		printf(" 1:%6d \n\r", McNhamCar.FrontLeftWheel.ControlPluse);
 //		printf(" 2:%6d \n\r", McNhamCar.FrontRightWheel.ControlPluse); 
 //		printf(" 3:%6d \n\r", McNhamCar.RearLeftWheel.ControlPluse);
@@ -827,17 +721,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 //		printf(" 2:%6d \n\r", McNhamCar.FrontRightWheel.CurrentSpeed); 
 //		printf(" 8:%6d \n\r", McNhamCar.RearLeftWheel.CurrentSpeed);
 //		printf(" 5:%6d \n\r", McNhamCar.RearRightWheel.CurrentSpeed);
-		
-//		printf(" 1:%6d \n\r", Rpm_Vel[0]);  //, (htim1.Instance->CR1 & 0x10));	
-//		printf(" 2:%6d \n\r", Rpm_Vel[1]); //, (htim2.Instance->CR1 & 0x10));
-//		printf(" 8:%6d \n\r", Rpm_Vel[2]); //, (htim8.Instance->CR1 & 0x10));
-//		printf(" 5:%6d \n\r", Rpm_Vel[3]); //, (htim5.Instance->CR1 & 0x10));
-
-//		Vel_PidCal();
-//		Motor_SetPWM(FrontWheel_Left, Pulse_width[0]);
-//		Motor_SetPWM(FrontWheel_Right, Pulse_width[1]);
-//		Motor_SetPWM(RearWheel_Left, Pulse_width[2]);
-//		Motor_SetPWM(RearWheel_Right, Pulse_width[3]);
 	}
   /* USER CODE END Callback 1 */
 }
